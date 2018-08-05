@@ -1,0 +1,9 @@
+{
+	"name": "flatmate-allocator",
+	"authors": [
+		"Jakub Szewczyk"
+	],
+	"description": "A flatmate allocator.",
+	"copyright": "Copyright © 2018, Jakub Szewczyk",
+	"license": "Apache-2.0"
+}
