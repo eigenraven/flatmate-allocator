@@ -121,6 +121,7 @@ System readFiles(string flatsFN, string incomingFN)
             s.flatPreferences[fi] ~= pref;
         }
     }
+    writeln(s.flatNames);
     foreach (mi, record; incomingF.csvReader!string
             .enumerate!int)
     {
@@ -165,18 +166,18 @@ int main(string[] args)
     }
     foreach (i; 0 .. iterations)
     {
-        pop[].sort!((a, b) => a.score(&sys) > b.score(&sys));
-        // keep worst for reference
-        pop[population - 1].matesFlat[] = pop[$ - 1].matesFlat[];
         foreach (j; 0 .. population)
         {
             size_t nj = j + population;
             pop[nj].matesFlat[] = pop[j].matesFlat[];
             pop[nj].mutate;
         }
+        pop[].sort!((a, b) => a.score(&sys) > b.score(&sys));
+        // keep worst for reference
+        pop[population - 1].matesFlat[] = pop[$ - 1].matesFlat[];
         bar.next();
     }
-    auto spop = pop[].sort!((a, b) => a.score(&sys) > b.score(&sys)).take(population).uniq;
+    auto spop = pop[].take(population).assumeSorted!((a, b) => a.score(&sys) > b.score(&sys)).uniq;
     bar.finish();
     writeln();
 
